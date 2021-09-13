@@ -5,20 +5,20 @@ var Schema = mongoose.Schema;
 
 
 var PettycashSchema = new Schema({
-    name: {
-        type: String,
-        // required: 'Please fill a Attendances name',
+    no: {
+        type: Number
     },
-    lastName: {
-        type: String,
-        // required: 'Please fill a Attendances lastName',
-    },
-    financialAmount: {
-        type: Number,
-        // required: 'Please fill a Attendances limit',
-    },
-    position: {
+    description: {
         type: String
+    },
+    deposit: {
+        type: Number
+    },
+    withdraw: {
+        type: Number
+    },
+    placeOfUse:{
+        type:String
     },
     created: {
         type: Date,
