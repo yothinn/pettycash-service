@@ -14,7 +14,6 @@ exports.getList = async function (req, res) {
     delete req.query.size;
 
     var searchText = req.query.query;
-    var channel = req.query.channel ? req.query.channel : null;
 
     var startDate = new Date(req.query.startDate);
     var endDate = new Date(req.query.endDate);
@@ -26,15 +25,7 @@ exports.getList = async function (req, res) {
         query['$and'].push({
             $or: [
                 { id: { $regex: `^${searchText}`, $options: "i" } },
-                { customerName: { $regex: `${searchText}`, $options: "i" } },
             ]
-        })
-    }
-
-    // Query channel
-    if (channel) {
-        query['$and'].push({
-            channel: channel
         })
     }
 

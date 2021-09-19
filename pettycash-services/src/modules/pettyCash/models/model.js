@@ -14,10 +14,7 @@ var PettycashSchema = new Schema({
     description: {
         type: String
     },
-    deposit: {
-        type: Number
-    },
-    withdraw: {
+    amount: {
         type: Number
     },
     placeOfUse:{
