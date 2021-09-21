@@ -17,6 +17,9 @@ var PettycashSchema = new Schema({
     amount: {
         type: Number
     },
+    status: {
+        type: String
+    },
     placeOfUse:{
         type:String
     },

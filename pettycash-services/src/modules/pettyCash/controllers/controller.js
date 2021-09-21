@@ -20,7 +20,7 @@ exports.getList = async function (req, res) {
 
     let query = { $and: [] };
 
-    // Query id, customer name
+    // Query id
     if (searchText) {
         query['$and'].push({
             $or: [
@@ -66,7 +66,7 @@ exports.getList = async function (req, res) {
             Pettycash.countDocuments(query).exec()
         ]);
 
-        //console.log(_result);
+        console.log(size);
 
         res.jsonp({
             status: 200,
