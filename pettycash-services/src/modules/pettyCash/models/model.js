@@ -9,7 +9,7 @@ var PettycashSchema = new Schema({
         type: String 
     },
     no: {
-        type: String
+        type: Number
     },
     description: {
         type: String
@@ -23,6 +23,7 @@ var PettycashSchema = new Schema({
     placeOfUse:{
         type:String
     },
+    imageUrl:{},
     created: {
         type: Date,
         default: Date.now
