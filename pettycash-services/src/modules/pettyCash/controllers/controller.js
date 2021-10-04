@@ -21,13 +21,13 @@ exports.getList = async function (req, res) {
     let query = { $and: [] };
 
     // Query id
-    if (searchText) {
-        query['$and'].push({
-            $or: [
-                { id: { $regex: `^${searchText}`, $options: "i" } },
-            ]
-        })
-    }
+    // if (searchText) {
+    //     query['$and'].push({
+    //         $or: [
+    //             { id: { $regex: `^${searchText}`, $options: "i" } },
+    //         ]
+    //     })
+    // }
 
     // Reset query when no parameter
     if (query['$and'].length === 0) {
@@ -58,14 +58,13 @@ exports.getList = async function (req, res) {
 
     try {
         const [_result, _count] = await Promise.all([
-            Pettycash.find(query)
+            Pettycash.find(req.query, {}, query)
                 .skip(size * (pageNo - 1))
                 .limit(size)
                 .sort(sort)
                 .exec(),
             Pettycash.countDocuments(query).exec()
         ]);
-
         console.log(size);
 
         res.jsonp({
@@ -83,6 +82,8 @@ exports.getList = async function (req, res) {
             message: errorHandler.getErrorMessage(err)
         });
     }
+
+
 };
 
 exports.create = function (req, res) {
