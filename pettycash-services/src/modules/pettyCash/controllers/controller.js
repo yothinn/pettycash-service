@@ -1,4 +1,7 @@
 'use strict';
+
+const { query } = require('express');
+
 var mongoose = require('mongoose'),
     model = require('../models/model'),
     mq = require('../../core/controllers/rabbitmq'),
@@ -15,6 +18,7 @@ exports.getList = async function (req, res) {
 
     var searchText = req.query.query;
 
+
     var startDate = new Date(req.query.startDate);
     var endDate = new Date(req.query.endDate);
 
@@ -28,6 +32,7 @@ exports.getList = async function (req, res) {
     //         ]
     //     })
     // }
+
 
     // Reset query when no parameter
     if (query['$and'].length === 0) {
@@ -58,12 +63,12 @@ exports.getList = async function (req, res) {
 
     try {
         const [_result, _count] = await Promise.all([
-            Pettycash.find(req.query, {}, query)
+            Pettycash.find(req.query, query)
                 .skip(size * (pageNo - 1))
                 .limit(size)
                 .sort(sort)
                 .exec(),
-            Pettycash.countDocuments(query).exec()
+            Pettycash.countDocuments(req.query).exec()
         ]);
         console.log(size);
 
@@ -171,3 +176,50 @@ exports.delete = function (req, res) {
         };
     });
 };
+
+exports.summary = async function (req, res) {
+
+    let sumIn = await Pettycash.aggregate([
+        {
+            $match: {
+                status: "เงินเข้า",
+            },
+
+        },
+        {
+            $group: {
+                _id: "$employeeId",
+                total: { $sum: "$amount" }
+            }
+        }
+    ]);
+
+    let sumOut = await Pettycash.aggregate([
+        {
+            $match: {
+                status: "เงินออก",
+            },
+
+        },
+        {
+            $group: {
+                _id: "$employeeId",
+                total: { $sum: "$amount" }
+            }
+        }
+    ]);
+
+    res.jsonp({
+        data: {
+            amountIn: sumIn,
+            amountOut: sumOut
+        }
+    });
+
+
+    console.log(testSumIn);
+    console.log(testSumOut);
+    
+    
+
+}
