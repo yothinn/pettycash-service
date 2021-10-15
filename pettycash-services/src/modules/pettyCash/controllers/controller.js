@@ -215,10 +215,6 @@ exports.summary = async function (req, res) {
             amountOut: sumOut
         }
     });
-
-
-    console.log(testSumIn);
-    console.log(testSumOut);
     
     
 
