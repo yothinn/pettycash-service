@@ -9,6 +9,9 @@ var mongoose = require('mongoose'),
     errorHandler = require('../../core/controllers/errors.server.controller'),
     _ = require('lodash');
 
+const XLSX = require('xlsx');
+const fs = require('fs');
+
 exports.getList = async function (req, res) {
     var pageNo = parseInt(req.query.pageNo);
     var size = parseInt(req.query.size);
@@ -215,7 +218,32 @@ exports.summary = async function (req, res) {
             amountOut: sumOut
         }
     });
-    
-    
+
+
 
 }
+
+// exports.uploads = function (req, res) {
+//     console.log(req.file.path)
+
+//     var filePath = req.file.path
+//     const workbook = XLSX.readFile(filePath);
+//     const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+//     let dataPettyCash = XLSX.utils.sheet_to_json(worksheet);
+
+//     for (let data of dataPettyCash) {
+//         let newPettycash = new Pettycash(data);
+//         newPettycash.save(function (err, data) {
+//             if (err) {
+//                 return res.status(400).send({
+//                     status: 400,
+//                     message: errorHandler.getErrorMessage(err)
+//                 });
+//             }
+//         })
+//     }
+//     res.jsonp({
+//         status: 200,
+//     });
+//     fs.unlinkSync(filePath);
+// }
